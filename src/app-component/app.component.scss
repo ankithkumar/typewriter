@@ -1,0 +1,32 @@
+.container {
+    width: 80vw;
+    background-color: #ffffff;
+    vertical-align: middle;
+    display: flex;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    text-align: middle;
+    height: calc(100vh - 100px);
+    overflow: auto;
+    .addLineGap {
+        height: 20px;
+        width: 100%;
+    }
+    .paragraph-container {
+        height: 40vh;
+        border: 0.5 px solid black;
+        padding: 20px;
+        overflow: auto;
+        width: 100%;
+    }
+    .input-container {
+        border: 0.5px solid black;
+        width: 100%;
+    }
+    .difficulty-options {
+        position: fixed;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
