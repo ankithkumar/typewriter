@@ -16,9 +16,11 @@ export default class AppComponent extends React.Component {
                 HARD: 'hard'
             },
             levelSelected: null,
-            inputPara: null
+            inputPara: null,
+            contentSelected: null,
         }
         this.handleDifficultySelection = this.handleDifficultySelection.bind(this);
+        this.updateTextCount = this.updateTextCount.bind(this);
     }
 
     giveMeRandomNumber(range) {
@@ -48,7 +50,14 @@ export default class AppComponent extends React.Component {
         console.log('para value ', paragraphValue);
         fetch(`https://baconipsum.com/api/?type=all-meat&paras=${paragraphValue}`)
             .then(response => response.json())
-            .then(para => this.setState({inputPara: para}));
+            .then(para => {
+                if (para && para.length) {
+                    para = para.map(paragraph => paragraph.split(''));
+                    this.setState({
+                        inputPara: para
+                    })
+                }
+            });
     }
 
     handleDifficultySelection(level) {
@@ -58,17 +67,22 @@ export default class AppComponent extends React.Component {
         })
     }
 
+    updateTextCount(content) {
+        console.log('content is ', content);
+        this.setState({contentSelected: content});
+    }
+
     render() {
         return (
             <React.Fragment>
                 <CssBaseline />
                 <Container maxWidth="md" className="container">
                     <div className="paragraph-container">
-                        <ParagraphComponent para={this.state.inputPara} />
+                        <ParagraphComponent para={this.state.inputPara} inputContent={this.state.contentSelected}/>
                     </div>
                     <div className="addLineGap"></div>
                     <div className="input-container">
-                        <InputComponent/>
+                        <InputComponent handleTextChange={this.updateTextCount}/>
                     </div>
                     <div className="difficulty-options">
                         <DifficultyComponent level={this.state.level} difficultySelected={this.handleDifficultySelection}/>
